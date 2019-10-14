@@ -448,6 +448,8 @@ abstract class DaemonController extends Controller
                 if (!$pid) {
                     $pid = pcntl_waitpid(-1, $status, WNOHANG);
                 }
+                if (is_array($pid) && array_key_exists('pid', $pid))
+                    $pid = $pid['pid'];
                 while ($pid > 0) {
                     if ($pid && isset(static::$currentJobs[$pid])) {
                         unset(static::$currentJobs[$pid]);
